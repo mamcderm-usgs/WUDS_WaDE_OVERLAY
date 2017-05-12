@@ -30,29 +30,32 @@ Vagrant.configure("2") do |config|
       echo "Installing necessary build tools"
       sudo yum makecache
       sudo yum install -y git rpmdevtools
-
+      rm -rf  ~/original
+      rm -rf ~/overlay
+      rm -rf ~/wade-web-$WADE_VERSION
+      
       echo "Creating build directory"
       rpmdev-setuptree
 
-      if [ ! -d ~/original/.git/ ]; then
-        echo "Downloading original source"
-        git clone https://$GITHUB_ACCESS_TOKEN:x-oauth-basic@github.com/USGS-CIDA/postgres-fullapp.git ~/original/
-				$ORIG_DIR=pwd
-				cd ~/original
-				git checkout v$WADE_VERSION
-				cd $ORIG_DIR
-      fi
+      echo "Downloading original source"
 
-      if [ ! -d ~/overlay/.git ]; then
-        echo "Downloading overlay source"
-        git clone https://github.com/USGS-CIDA/WUDS_WaDE_OVERLAY.git ~/overlay/
-      fi
+      git clone https://$GITHUB_ACCESS_TOKEN:x-oauth-basic@github.com/USGS-CIDA/postgres-fullapp.git ~/original/
+			$ORIG_DIR=pwd
+			cd ~/original
+			git checkout v$WADE_VERSION
+			cd $ORIG_DIR
 
+      echo "Downloading overlay source"
+
+      git clone https://github.com/USGS-CIDA/WUDS_WaDE_OVERLAY.git ~/overlay/
 
       echo "Creating tar package"
       mkdir -p ~/wade-web-$WADE_VERSION/var/www/html
       cp -a ~/original/webservices/WADE ~/wade-web-$WADE_VERSION/var/www/html
       cp -a ~/overlay/webservices/WADE ~/wade-web-$WADE_VERSION/var/www/html
+      mkdir -p ~/wade-web-$WADE_VERSION/var/www/html/WADE/Postgres/v0.2
+      mv ~/wade-web-$WADE_VERSION/var/www/html/WADE/v0.2/config.inc.php ~/wade-web-$WADE_VERSION/var/www/html/WADE/Postgres/v0.2/
+      mv ~/wade-web-$WADE_VERSION/var/www/html/WADE/v0.2/adodb ~/wade-web-$WADE_VERSION/var/www/html/WADE/Postgres/v0.2/
       tar -zcf ~/wade-web-$WADE_VERSION.tar.gz -C ~ ./wade-web-$WADE_VERSION/
       mv ~/wade-web-$WADE_VERSION.tar.gz ~/rpmbuild/SOURCES/
       cp ~/overlay/rpm_build/wade.spec ~/rpmbuild/SPECS/
