@@ -33,12 +33,12 @@ Vagrant.configure("2") do |config|
       rpmdev-setuptree
 
       if [ ! -d ~/original/.git/ ]; then
-        echo "Downloading overlay source"
+        echo "Downloading original source"
         git clone https://$GITHUB_ACCESS_TOKEN:x-oauth-basic@github.com/USGS-CIDA/postgres-fullapp.git ~/original/
       fi
 
       if [ ! -d ~/overlay/.git ]; then
-        echo "Downloading original source"
+        echo "Downloading overlay source"
         git clone https://github.com/USGS-CIDA/WUDS_WaDE_OVERLAY.git ~/overlay/
       fi
 

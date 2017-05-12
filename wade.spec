@@ -41,7 +41,6 @@ find . -type l | sed -e 's,^\.,\%attr(-\,root\,root) ,' >> %{buildroot}/file.lis
 rm -rf %{buildroot}
 
 %files -f %{buildroot}/file.list.%{name}
-%license LICENSE.md
 %dir %{apache_dir}/WADE
 %defattr(755,root,root,755)
 %doc
