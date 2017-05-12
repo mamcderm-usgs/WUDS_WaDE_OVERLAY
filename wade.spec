@@ -1,5 +1,3 @@
-# sudo yum install rpm-build
-
 Name: wade-web
 Version: 0.0.1
 Release: 1%{?dist}
@@ -23,12 +21,14 @@ Sets up the WaDE website on an Apache httpd server
 %setup -q
 
 %build
+
 %configure
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+mkdir -p %{buildroot}/%{_bindir}
+
+install -m 0755 %{name} %{buildroot}/%{_bindir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -36,3 +36,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc
+
+%changelog
+* Tue May 31 2016 Adam Miller <maxamillion@fedoraproject.org> - 0.1-1
+- First bello package
+- Example second item in the changelog for version-release 0.1-1
