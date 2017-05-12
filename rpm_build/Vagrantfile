@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
       rm -rf  ~/original
       rm -rf ~/overlay
       rm -rf ~/wade-web-$WADE_VERSION
-      
+
       echo "Creating build directory"
       rpmdev-setuptree
 
@@ -53,9 +53,6 @@ Vagrant.configure("2") do |config|
       mkdir -p ~/wade-web-$WADE_VERSION/var/www/html
       cp -a ~/original/webservices/WADE ~/wade-web-$WADE_VERSION/var/www/html
       cp -a ~/overlay/webservices/WADE ~/wade-web-$WADE_VERSION/var/www/html
-      mkdir -p ~/wade-web-$WADE_VERSION/var/www/html/WADE/Postgres/v0.2
-      mv ~/wade-web-$WADE_VERSION/var/www/html/WADE/v0.2/config.inc.php ~/wade-web-$WADE_VERSION/var/www/html/WADE/Postgres/v0.2/
-      mv ~/wade-web-$WADE_VERSION/var/www/html/WADE/v0.2/adodb ~/wade-web-$WADE_VERSION/var/www/html/WADE/Postgres/v0.2/
       tar -zcf ~/wade-web-$WADE_VERSION.tar.gz -C ~ ./wade-web-$WADE_VERSION/
       mv ~/wade-web-$WADE_VERSION.tar.gz ~/rpmbuild/SOURCES/
       cp ~/overlay/rpm_build/wade.spec ~/rpmbuild/SPECS/
