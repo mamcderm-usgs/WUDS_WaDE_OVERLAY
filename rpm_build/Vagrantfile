@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       cd ~/rpmbuild/SPECS/
       rpmbuild -v --clean -ba wade.spec
 			cp ~/rpmbuild/SRPMS/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.src.rpm /vagrant/
-			cp ~/rpmbuild/SRPMS/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.noarch.rpm /vagrant/
+			cp ~/rpmbuild/RPMS/noarch/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.noarch.rpm /vagrant/
     SHELL
   end
 end
