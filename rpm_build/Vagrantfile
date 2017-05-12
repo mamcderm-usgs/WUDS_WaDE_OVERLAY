@@ -22,7 +22,8 @@ Vagrant.configure("2") do |config|
     s.env = {
       GITHUB_ACCESS_TOKEN:ENV['GITHUB_ACCESS_TOKEN'],
       GIT_SSL_NO_VERIFY:true,
-      WADE_VERSION:ENV['WADE_VERSION'] || '0.0.1'
+      WADE_VERSION:ENV['WADE_VERSION'] || '0.0.1',
+      WADE_RELEASE:ENV['WADE_RELEASE'] || '1'
     }
     s.inline = <<-SHELL
       echo "Installing necessary build tools"
@@ -33,12 +34,12 @@ Vagrant.configure("2") do |config|
       rpmdev-setuptree
 
       if [ ! -d ~/original/.git/ ]; then
-        echo "Downloading overlay source"
+        echo "Downloading original source"
         git clone https://$GITHUB_ACCESS_TOKEN:x-oauth-basic@github.com/USGS-CIDA/postgres-fullapp.git ~/original/
       fi
 
       if [ ! -d ~/overlay/.git ]; then
-        echo "Downloading original source"
+        echo "Downloading overlay source"
         git clone https://github.com/USGS-CIDA/WUDS_WaDE_OVERLAY.git ~/overlay/
       fi
 
@@ -49,9 +50,11 @@ Vagrant.configure("2") do |config|
       cp -a ~/overlay/webservices/WADE ~/wade-web-$WADE_VERSION/var/www/html
       tar -zcf ~/wade-web-$WADE_VERSION.tar.gz -C ~ ./wade-web-$WADE_VERSION/
       mv ~/wade-web-$WADE_VERSION.tar.gz ~/rpmbuild/SOURCES/
-      cp ~/overlay/wade.spec ~/rpmbuild/SPECS/
+      cp ~/overlay/rpm_build/wade.spec ~/rpmbuild/SPECS/
       cd ~/rpmbuild/SPECS/
       rpmbuild -v --clean -ba wade.spec
+			cp ~/rpmbuild/SRPMS/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.src.rpm /vagrant/
+			cp ~/rpmbuild/SRPMS/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.noarch.rpm /vagrant/
     SHELL
   end
 end
