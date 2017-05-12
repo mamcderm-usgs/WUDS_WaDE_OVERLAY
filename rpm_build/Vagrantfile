@@ -23,7 +23,8 @@ Vagrant.configure("2") do |config|
       GITHUB_ACCESS_TOKEN:ENV['GITHUB_ACCESS_TOKEN'],
       GIT_SSL_NO_VERIFY:true,
       WADE_VERSION:ENV['WADE_VERSION'] || '0.0.1',
-      WADE_RELEASE:ENV['WADE_RELEASE'] || '1'
+      WADE_RELEASE:ENV['WADE_RELEASE'] || '1',
+      WADE_EPOCH:ENV['WADE_EPOCH'] || '1'
     }
     s.inline = <<-SHELL
       echo "Installing necessary build tools"
@@ -52,7 +53,10 @@ Vagrant.configure("2") do |config|
       mv ~/wade-web-$WADE_VERSION.tar.gz ~/rpmbuild/SOURCES/
       cp ~/overlay/rpm_build/wade.spec ~/rpmbuild/SPECS/
       cd ~/rpmbuild/SPECS/
-      rpmbuild -v --clean -ba wade.spec
+      rpmbuild \
+				--define "_wade_version $WADE_VERSION" \
+				--define "_wade_release $WADE_RELEASE" \
+				--define "_wade_epoch $WADE_EPOCH" -v --clean  -ba wade.spec
 			cp ~/rpmbuild/SRPMS/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.src.rpm /vagrant/
 			cp ~/rpmbuild/RPMS/noarch/wade-web-$WADE_VERSION-$WADE_RELEASE.el6.noarch.rpm /vagrant/
     SHELL

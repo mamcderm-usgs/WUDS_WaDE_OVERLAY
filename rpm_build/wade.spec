@@ -2,8 +2,9 @@
 %define apache_dir /var/www/html
 
 Name: wade-web
-Version: 0.0.1
-Release: 1%{?dist}
+Version: %{_wade_version}
+Release: %{_wade_release}%{?dist}
+Epoch: %{_wade_epoch}
 Summary: The Water Data Exchange website
 Group: Applications/Internet
 License: GPL
@@ -12,7 +13,7 @@ Source: %{_topdir}/SOURCES/%{name}-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildArch: noarch
 Packager: Ivan Suftin <isuftin@usgs.gov>
-Prefix: /var/www/html
+Prefix: %{apache_dir}
 
 %description
 Sets up the WaDE website on an Apache httpd server
