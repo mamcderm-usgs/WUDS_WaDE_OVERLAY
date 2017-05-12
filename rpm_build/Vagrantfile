@@ -37,6 +37,10 @@ Vagrant.configure("2") do |config|
       if [ ! -d ~/original/.git/ ]; then
         echo "Downloading original source"
         git clone https://$GITHUB_ACCESS_TOKEN:x-oauth-basic@github.com/USGS-CIDA/postgres-fullapp.git ~/original/
+				$ORIG_DIR=pwd
+				cd ~/original
+				git checkout v$WADE_VERSION
+				cd $ORIG_DIR
       fi
 
       if [ ! -d ~/overlay/.git ]; then
