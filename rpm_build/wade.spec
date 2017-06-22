@@ -1,3 +1,4 @@
+%define _rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
 %define _unpackaged_files_terminate_build 0
 %define apache_dir /var/www/html
 
