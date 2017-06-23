@@ -1,10 +1,10 @@
-%define _rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
+%define _rpmfilename %%{NAME}-%%{VERSION}-%%{RELEASE}.%{?dist}.%%{ARCH}.rpm
 %define _unpackaged_files_terminate_build 0
 %define apache_dir /var/www/html
 
 Name: wade-web
 Version: %{_wade_version}
-Release: %{_wade_release}
+Release: %{_wade_release}%{?dist}
 Epoch: %{_wade_epoch}
 Summary: The Water Data Exchange website
 Group: Applications/Internet
