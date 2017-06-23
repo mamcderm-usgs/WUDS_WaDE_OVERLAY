@@ -3,7 +3,7 @@
 
 Name: wade-web
 Version: %{_wade_version}
-Release: %{_wade_release}%{?dist}
+Release: %{_wade_release}
 Epoch: %{_wade_epoch}
 Summary: The Water Data Exchange website
 Group: Applications/Internet
